@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeLV — 今日やることを、自分で選ばない</title>
+<meta name="description" content="溜めたタスクから今日の分だけを出すiPhoneアプリ。選ぶ手間も、消化できなかった負い目もありません。積んだ時間はレベルと称号になります。">
+<meta property="og:title" content="LifeLV — 今日やることを、自分で選ばない">
+<meta property="og:description" content="溜めたタスクから今日の分だけを出すiPhoneアプリ。選ぶ手間も、消化できなかった負い目もありません。">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f5f5f7;
+    --fg: #1c1c1e;
+    --fg-soft: #5a5a5f;
+    --line: #e3e3e6;
+    --accent: #0a66c2;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111113;
+      --bg-soft: #1c1c1f;
+      --fg: #f2f2f4;
+      --fg-soft: #a8a8ae;
+      --line: #2e2e33;
+      --accent: #7ab8f5;
+      --card: #1c1c1f;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    line-height: 1.85;
+    color: var(--fg);
+    background: var(--bg);
+    font-size: 16px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+
+  /* hero */
+  .hero { text-align: center; padding: 72px 0 56px; }
+  .icon { width: 84px; height: 84px; border-radius: 20px; margin-bottom: 20px; }
+  .mark {
+    display: inline-block; font-size: 0.8rem; letter-spacing: .12em;
+    color: var(--fg-soft); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 14px; margin-bottom: 22px;
+  }
+  h1 { font-size: clamp(2rem, 7vw, 3rem); line-height: 1.35; margin: 0 0 18px; letter-spacing: .01em; }
+  .lead { font-size: clamp(1rem, 3.4vw, 1.15rem); color: var(--fg-soft); margin: 0 auto 32px; max-width: 34em; }
+  .cta {
+    display: inline-block; background: var(--fg); color: var(--bg);
+    text-decoration: none; font-weight: 600;
+    padding: 14px 30px; border-radius: 999px; font-size: 1rem;
+  }
+  .cta:hover { opacity: .85; }
+  .cta-note { display: block; margin-top: 12px; font-size: .85rem; color: var(--fg-soft); }
+
+  h2 { font-size: clamp(1.3rem, 4.6vw, 1.7rem); margin: 0 0 10px; line-height: 1.45; }
+  h3 { font-size: 1.05rem; margin: 0 0 6px; }
+  .sub { color: var(--fg-soft); margin: 0 0 30px; }
+  p { margin: 0 0 1em; }
+
+  /* before/after comparison */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
+  .compare > div {
+    background: var(--bg-soft); border-radius: 16px; padding: 24px 20px;
+  }
+  .compare .label { font-size: .82rem; color: var(--fg-soft); margin-bottom: 10px; }
+  .compare strong { display: block; font-size: 1rem; margin-bottom: 8px; }
+  .compare p { font-size: .92rem; color: var(--fg-soft); margin: 0; }
+  @media (max-width: 560px) { .compare { grid-template-columns: 1fr; } }
+
+  /* feature rows */
+  .row { display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: center; }
+  .row.flip { grid-template-columns: 260px 1fr; }
+  .row.flip .shot { order: -1; }
+  .shot img {
+    width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto;
+    border-radius: 22px; border: 1px solid var(--line);
+  }
+  @media (max-width: 720px) {
+    .row, .row.flip { grid-template-columns: 1fr; gap: 26px; }
+    .row.flip .shot { order: 0; }
+  }
+
+  ul { padding-left: 1.3em; margin: 0 0 1em; }
+  li { margin-bottom: .4em; }
+  .note { background: var(--bg-soft); border-radius: 14px; padding: 20px 22px; color: var(--fg-soft); font-size: .94rem; }
+  .price { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 26px 0 0; }
+  .price > div { border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; }
+  .price .tier { font-size: .82rem; color: var(--fg-soft); margin-bottom: 8px; }
+  .price .amount { font-size: 1.35rem; font-weight: 600; margin-bottom: 12px; }
+  .price ul { margin: 0; font-size: .93rem; color: var(--fg-soft); }
+  @media (max-width: 560px) { .price { grid-template-columns: 1fr; } }
+  a { color: var(--accent); }
+
+  footer { padding: 40px 0 64px; font-size: .9rem; color: var(--fg-soft); text-align: center; }
+  footer a { margin: 0 10px; display: inline-block; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="icon" src="images/appicon.png" alt="LifeLV アプリアイコン">
+    <span class="mark">iPhone アプリ</span>
+    <h1>やることリストが、<br>開かなくなっていませんか。</h1>
+    <p class="lead">
+      LifeLV（ライフエルブイ）は、今日やることを「自分で選ばない」タスクアプリです。<br>
+      溜めたタスクが50個あっても、画面に出るのは3〜5個だけ。選ぶ手間も、消化できなかった負い目も生まれません。
+    </p>
+    <a class="cta" href="https://apps.apple.com/jp/app/lifelv/id6809692228">App Store で見る</a>
+    <span class="cta-note">無料で使えます（広告あり）・買い切り ¥480 で広告非表示</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>リストが長くなるほど、開くのが億劫になる</h2>
+    <p class="sub">タスクを全部並べると、やる前に「どれからやるか」を決める作業が挟まります。そして並んだままのものが、未達として毎日目に入ります。</p>
+
+    <div class="compare">
+      <div>
+        <div class="label">よくあるやることリスト</div>
+        <strong>全部並べて、選ばせる</strong>
+        <p>優先順位をつけるところで疲れます。できなかったものは赤字やバッジになって残り、開くこと自体が気重になります。</p>
+      </div>
+      <div>
+        <div class="label">LifeLV</div>
+        <strong>今日の分だけを出す</strong>
+        <p>アプリが選んで並べるので、決める作業がありません。やらなかったものはリストに戻るだけで、未達の表示は一切出しません。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <h2>開くと、今日の分だけが出ています</h2>
+        <p>期限があるもの、繰り返しのもの、そして<strong>これまであまり時間を使えていない分野</strong>から、アプリが選んで並べます。だから偏りが自然に埋まっていきます。</p>
+        <p>枠の数は 3・4・5 から一度だけ選びます（既定は4）。毎日決めさせることはしません。</p>
+        <p class="sub" style="margin-bottom:0">今日の枠は、その日最初に開いたときに決まります。日中に新しいタスクを登録しても、それが今日の枠に割り込むことはありません（翌日から候補に入ります）。</p>
+      </div>
+      <div class="shot"><img src="images/shot-today.png" alt="今日の画面。単語をおぼえる15分、本を読む30分、食器を片づける15分などが並び、各行に「今日はやらない」と「やった」が置かれている" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>「今日はやらない」を、気軽に押せます</h2>
+    <p>出てきたものが今日の気分に合わないなら、そのまま外してください。確認も出ませんし、<strong>回数の制限もありません</strong>。外した分は別のものが入ります。</p>
+    <p>外したタスクは今日はもう出ません。翌日には普通に候補へ戻ります。</p>
+    <p style="margin-bottom:0">枠を全部消化したら「今日の分は終わり」で閉じます。追加のセットは出しません。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row flip">
+      <div class="shot"><img src="images/shot-progress.png" alt="記録の画面。現在のレベルLv.6、ステータスとして家事8・勉強4、これまでの道のりにレベルと称号の履歴が並んでいる" loading="lazy"></div>
+      <div>
+        <h2>積んだ時間が、そのまま残ります</h2>
+        <p>記録した時間が経験値になります（1時間＝1XP）。分野ごとの合計が「ステータス」として開くので、<strong>どこに時間を使えていて、どこが薄いのかが後から見えます</strong>。</p>
+        <p>今日の枠に出ていないことをやったときも、「やったことを足す」から記録できます。打ち始めると登録済みのタスクが候補に出るので、「これ登録してたっけ」を思い出す必要はありません。</p>
+        <p class="sub" style="margin-bottom:0">Lv.100まで登るとレベルだけが1に戻り、次の周が始まります。分野ごとに積んだ時間はそのまま引き継がれます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <h2>節目には、称号が付きます</h2>
+        <p>「新人」から始まり、主任、課長、部長……と役職を登っていきます。称号の前半は、そのときのあなたの偏りから作られます。</p>
+        <p>たとえば勉強に時間を使えていない時期には、そこを名指しした称号が出ます。<strong>真に受けないでください。</strong></p>
+        <p class="sub" style="margin-bottom:0">他人と比べる機能はありません。順位も、SNSへの共有もありません。</p>
+      </div>
+      <div class="shot"><img src="images/shot-levelup.png" alt="レベルアップの画面。「勉強をそっと閉じた 家事 の 一人前」という称号とLv.6が表示されている" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row flip">
+      <div class="shot"><img src="images/shot-settings.png" alt="設定画面。1日の枠を3・4・5から選ぶ項目、朝のお知らせ、カテゴリ、広告を解除する¥480（買い切り）、購入を復元する" loading="lazy"></div>
+      <div>
+        <h2>料金</h2>
+        <div class="price">
+          <div>
+            <div class="tier">無料</div>
+            <div class="amount">¥0</div>
+            <ul>
+              <li>機能の制限はありません</li>
+              <li>画面の下に広告が1つ出ます</li>
+              <li>分野（カテゴリ）は5個まで</li>
+            </ul>
+          </div>
+          <div>
+            <div class="tier">買い切り・1回のみ</div>
+            <div class="amount">¥480</div>
+            <ul>
+              <li>広告の非表示</li>
+              <li>iCloud同期（複数の端末で記録を揃える）</li>
+              <li>分野の数の上限を解放</li>
+            </ul>
+          </div>
+        </div>
+        <p class="sub" style="margin:20px 0 0">月額の課金はありません。一度購入すれば、同じ Apple ID で復元できます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>急かすことはしません</h2>
+    <p>通知は<strong>朝1回だけ</strong>で、中身も件数も書きません。未消化の催促や、夜の追い立てはありません（通知そのものを切っておくこともできます）。</p>
+    <div class="note">
+      こんな方に向いています——やることリストを作ったのに開かなくなってしまった方、優先順位をつける時点で疲れてしまう方、できなかったタスクが並んでいるのを見たくない方、記録は続けたいが細かく計測するのは面倒な方。
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>対応環境とご注意</h2>
+    <ul>
+      <li>iOS 18.0 以上の iPhone</li>
+      <li>iCloud同期は買い切りの購入後に有効になります（無料のあいだは端末の中だけで記録します）</li>
+      <li>アカウント登録は不要です</li>
+    </ul>
+    <p style="margin-bottom:0">本アプリが表示するレベル・経験値・時間は、<strong>あなたが入力した内容の集計です</strong>。実際の活動量を計測するものではなく、健康や生産性の指導・診断を目的とするものではありません。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><a class="cta" href="https://apps.apple.com/jp/app/lifelv/id6809692228">App Store で見る</a></p>
+    <p style="margin-top:26px">
+      <a href="https://shoheicraftdev-design.github.io/life-lv-support/">サポート・使い方</a>
+      <a href="https://shoheicraftdev-design.github.io/life-lv-support/privacy.html">プライバシーポリシー</a>
+      <a href="https://shoheicraftdev-design.github.io/life-lv-support/terms.html">利用規約</a>
+      <a href="mailto:shohei.craft.dev@gmail.com">お問い合わせ</a>
+    </p>
+    <p style="margin-top:18px">ShoheiCraftDev</p>
+  </div>
+</footer>
+
+</body>
+</html>
