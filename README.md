@@ -12,13 +12,12 @@ iPhone アプリ「LifeLV」（内部名 LifeLoop）の製品紹介ページ。G
 **匿名ライン（note・Xで製品名を出さない）を維持したままアプリ名とストアURLを出せるチャネル**。
 サポート・法務ページは別リポジトリ `life-lv-support` が持つ（ここには置かない）。
 
-★**ASC のマーケティングURLにこのURLを設定する。** LifeLV では未設定のまま公開してしまい、
-iOS の app-ads.txt 認証（AdMob）はこの欄を起点にドメインを決めるため、認証が通らない状態になっている。
-この欄は公開後に単独では直せず**新Verの提出が要る**ので、次Verの掲載情報に同梱する（台帳 `h-483zsj`）。
+★**ASC のマーケティングURLにこのURLを設定済み（ver-1.1・2026-09-17）。** iOS の app-ads.txt 認証（AdMob）はこの欄を起点にドメインを決める。
+v1.0 は未設定のまま公開して認証が通らなかったため、ver-1.1 の掲載情報に同梱して入れた（台帳 `h-483zsj`）。公開中の lookup の `sellerUrl` がこの URL。
 
 ## 内容の版
 
-**v1.0（2026-09-10 App Store 公開・build 2）に合わせて作成。** 参照: `life-loop/docs/appstore/v1-store-listing.md`
+**v1.0（2026-09-10 App Store 公開・build 2）に合わせて作成し、ver-1.1（2026-09-17 公開）でも内容は変わらない**（1.1 は不具合修正とマーケティングURLの設定のみ・2026-09-28 点検 `d-yso5qm`）。参照: `life-loop/docs/appstore/ver-1.1-submission.md`・`v1-store-listing.md`
 
 ## 素材
 
